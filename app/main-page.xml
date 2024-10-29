@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" 
+      navigatingTo="navigatingTo"
+      class="{{ darkMode ? 'ns-dark' : '' }}">
+    
+    <ActionBar title="قائمة المهام" class="action-bar">
+        <ActionItem tap="{{ toggleDarkMode }}" 
+                   ios.position="right" 
+                   android.position="actionBar">
+            <Label text="{{ darkMode ? '☀️' : '🌙' }}" />
+        </ActionItem>
+    </ActionBar>
+
+    <GridLayout rows="*, auto">
+        <ListView items="{{ todos }}" row="0" class="list-group">
+            <ListView.itemTemplate>
+                <GridLayout columns="auto, *, auto" class="todo-item p-4">
+                    <CheckBox checked="{{ completed }}" 
+                             tap="{{ $parent.toggleTodoComplete }}" 
+                             col="0" />
+                    <StackLayout col="1" class="ml-4">
+                        <Label text="{{ title }}" 
+                               class="{{ completed ? 'todo-item-completed' : '' }} text-lg" 
+                               textWrap="true" />
+                        <Label text="{{ description }}" 
+                               class="text-sm text-gray-500" 
+                               visibility="{{ description ? 'visible' : 'collapsed' }}"
+                               textWrap="true" />
+                    </StackLayout>
+                    <Button text="🗑️" 
+                            tap="{{ $parent.deleteTodo }}" 
+                            col="2" 
+                            class="text-red-500" />
+                </GridLayout>
+            </ListView.itemTemplate>
+        </ListView>
+
+        <Button text="+" 
+                tap="{{ showAddTodoDialog }}" 
+                class="fab text-white text-2xl" 
+                row="1" />
+    </GridLayout>
+</Page>
